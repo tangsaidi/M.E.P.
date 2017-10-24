@@ -1,0 +1,54 @@
+{
+  "labelAnnotations": [
+    {
+      "mid": "/m/078dnm",
+      "description": "bucatini",
+      "score": 0.9397995
+    },
+    {
+      "mid": "/m/03qkdt4",
+      "description": "naporitan",
+      "score": 0.93446743
+    },
+    {
+      "mid": "/m/0772h",
+      "description": "spaghetti",
+      "score": 0.93360174
+    },
+    {
+      "mid": "/m/04t8sg",
+      "description": "al dente",
+      "score": 0.9328859
+    },
+    {
+      "mid": "/m/09y2k2",
+      "description": "italian food",
+      "score": 0.8996402
+    },
+    {
+      "mid": "/m/02q08p0",
+      "description": "dish",
+      "score": 0.895987
+    },
+    {
+      "mid": "/m/01ykh",
+      "description": "cuisine",
+      "score": 0.88457274
+    },
+    {
+      "mid": "/m/07nlyz",
+      "description": "spaghetti alla puttanesca",
+      "score": 0.87101114
+    },
+    {
+      "mid": "/m/02lggn",
+      "description": "european food",
+      "score": 0.834665
+    },
+    {
+      "mid": "/m/0273gv",
+      "description": "carbonara",
+      "score": 0.81284696
+    }
+  ]
+}
