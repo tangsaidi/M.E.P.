@@ -1,0 +1,54 @@
+{
+  "labelAnnotations": [
+    {
+      "mid": "/m/02q08p0",
+      "description": "dish",
+      "score": 0.91643256
+    },
+    {
+      "mid": "/m/02wbm",
+      "description": "food",
+      "score": 0.85967493
+    },
+    {
+      "mid": "/m/01ykh",
+      "description": "cuisine",
+      "score": 0.8573074
+    },
+    {
+      "mid": "/m/07_lq",
+      "description": "vegetarian food",
+      "score": 0.7739706
+    },
+    {
+      "mid": "/m/052lwg6",
+      "description": "baked goods",
+      "score": 0.6520294
+    },
+    {
+      "mid": "/m/07l8p5",
+      "description": "side dish",
+      "score": 0.6150127
+    },
+    {
+      "mid": "/m/0f4s2w",
+      "description": "vegetable",
+      "score": 0.55405754
+    },
+    {
+      "mid": "/m/0p57p",
+      "description": "recipe",
+      "score": 0.55076426
+    },
+    {
+      "mid": "/m/02lggn",
+      "description": "european food",
+      "score": 0.5489165
+    },
+    {
+      "mid": "/m/0b3dyl",
+      "description": "finger food",
+      "score": 0.5002242
+    }
+  ]
+}
