@@ -98,8 +98,10 @@ if __name__ == '__main__':
                 print("They are ")
                 print(bestmatch)
                 print("time is")
-                print(items[bestmatch])
-            
+                if bestmatch != "dish":
+                    print(items[bestmatch])
+                else:
+            	    print("30")
             #save the size response to a size.json file
             for idx, resp in enumerate(sizeresponse.json()['responses']):
                 # save to JSON file
