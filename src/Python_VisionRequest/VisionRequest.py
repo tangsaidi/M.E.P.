@@ -4,13 +4,17 @@ from os.path import join, basename
 from sys import argv
 import json
 import requests
+import math
+
+from fuzzywuzzy import fuzz
+from fuzzywuzzy import process
 
 myAPIKey = 'AIzaSyC-SHS_56ZC7GC3dv374UcGsOUD3PTLEtQ'
 ENDPOINT_URL = 'https://vision.googleapis.com/v1/images:annotate'
 RESULTS_DIR = 'jsons'
 makedirs(RESULTS_DIR, exist_ok=True)
 
-def make_image_data_list(image_filenames):
+def make_image_data_list(image_filenames, content_type):
     """
     image_filenames is a list of filename strings
     Returns a list of dicts formatted as the Vision API
@@ -21,47 +25,50 @@ def make_image_data_list(image_filenames):
         """read the imgname as binary"""
         with open(imgname, 'rb') as f:
             ctxt = b64encode(f.read()).decode()
-            """appending the imgrequest list to meet google api requirement"""
-            # img_requests.append({
-            #         'image': {'content': ctxt},
-            #         'features': [{
-            #             'type': 'TEXT_DETECTION',
-            #             'maxResults': 1
-            #         }]
-            # })
             img_requests.append({
                     'image': {
                         'content': ctxt},
                     'features':[{
-                        'type':'LABEL_DETECTION'
+                        'type': content_type
                     }] 
             
             })
 
     return img_requests
 
-def make_image_data(image_filenames):
+def make_image_data(image_filenames, content_type):
     """Returns the image data lists as bytes"""
-    imgdict = make_image_data_list(image_filenames)
+    imgdict = make_image_data_list(image_filenames, content_type)
     return json.dumps({"requests": imgdict }).encode()
 
 
-def request_ocr(api_key, image_filenames):
+def request_label(api_key, image_filenames):
     response = requests.post(ENDPOINT_URL,
-                             data=make_image_data(image_filenames),
+                             data=make_image_data(image_filenames, 'LABEL_DETECTION'),
                              params={'key': myAPIKey},
                              headers={'Content-Type': 'application/json'})
     return response
 
+#detect size of the dominant pixels
+
+def request_size(api_key, image_filenames):
+    response = requests.post(ENDPOINT_URL,
+                            data= make_image_data(image_filenames, 'IMAGE_PROPERTIES'),
+                            params={'key': myAPIKey},
+                            headers={'Content-Type': 'application/json'})
+    return response
+
 
 if __name__ == '__main__':
+
     image_filenames = argv[1:]
     if not image_filenames:
         print("""
             Please supply an api key, then one or more image filenames
             $ python cloudvisreq.py api_key image1.jpg image2.png""")
     else:
-        response = request_ocr(myAPIKey, image_filenames)
+        response = request_label(myAPIKey, image_filenames)
+        sizeresponse = request_size(myAPIKey, image_filenames)
         if response.status_code != 200 or response.json().get('error'):
             print(response.text)
         else:
@@ -71,23 +78,42 @@ if __name__ == '__main__':
                 jpath = join(RESULTS_DIR, basename(imgname) + '.json')
                 with open(jpath, 'w') as f:
                     datatxt = json.dumps(resp, indent=2)
-                    print("Wrote", len(datatxt), "bytes to", jpath)
+                    # print("Wrote", len(datatxt), "bytes to", jpath)
                     f.write(datatxt)
 
+
+                keys = ['milk','spaghetti','ramen','steak','drink']
+                values = [20, 35, 30, 50, 20]
+                items = {k:v for k, v in zip(keys, values)}
+
                 # print the plaintext to screen for convenience
-                print("---------------------------------------------")
-                # t = resp['textAnnotations'][0]
-                # print("    Bounding Polygon:")
-                # print(t['boundingPoly'])
-                # print("    Text:")
-                # print(t['description'])
-                for i in range (0, 3):
+                i = len(resp['labelAnnotations']) - 1;
+                bestmatch = "dish"
+                while (i >= 0):
                     t = resp['labelAnnotations'][i]
-                    print("Description:          ")
-                    print(t['description'])
-                    print("Confidence:       ")
-                    print(t['score'])
-                    i = i + 1
+                    result = process.extractOne(t['description'], keys)
+                    if result[1] >= 70:
+                        bestmatch = result[0]
+                    i = i - 1
+                print("They are ")
+                print(bestmatch)
+                print("time is")
+                print(items[bestmatch])
+            
+            #save the size response to a size.json file
+            for idx, resp in enumerate(sizeresponse.json()['responses']):
+                # save to JSON file
+                imgname = image_filenames[idx]
+                jpath = join(RESULTS_DIR, basename(imgname) + 'size' + '.json')
+                with open(jpath, 'w') as f:
+                    datatxt = json.dumps(resp, indent=2)
+                    # print("Wrote", len(datatxt), "bytes to", jpath)
+                    f.write(datatxt)
+                t = resp['cropHintsAnnotation']['cropHints'][0]["boundingPoly"]['vertices']
+                area = int(t[1]['x']) * int(t[3]['y']) * 0.0007
+                volume = area * math.sqrt(area)
+                print("The volume is")
+                print(volume)
 
 
 
