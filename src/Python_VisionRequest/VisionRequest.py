@@ -13,7 +13,9 @@ myAPIKey = 'AIzaSyC-SHS_56ZC7GC3dv374UcGsOUD3PTLEtQ'
 ENDPOINT_URL = 'https://vision.googleapis.com/v1/images:annotate'
 RESULTS_DIR = 'jsons'
 makedirs(RESULTS_DIR, exist_ok=True)
-
+time = 45
+first_string = ""
+second_string = ""
 def make_image_data_list(image_filenames, content_type):
     """
     image_filenames is a list of filename strings
@@ -95,13 +97,13 @@ if __name__ == '__main__':
                     if result[1] >= 70:
                         bestmatch = result[0]
                     i = i - 1
-                print("They are ")
-                print(bestmatch)
-                print("time is")
+                # print("They are ")
+                first_string = bestmatch + ";"
+                # print("time is")
                 if bestmatch != "dish":
-                    print(items[bestmatch])
+                    time = items[bestmatch]
                 else:
-            	    print("30")
+            	    time = 30
             #save the size response to a size.json file
             for idx, resp in enumerate(sizeresponse.json()['responses']):
                 # save to JSON file
@@ -114,9 +116,8 @@ if __name__ == '__main__':
                 t = resp['cropHintsAnnotation']['cropHints'][0]["boundingPoly"]['vertices']
                 area = int(t[1]['x']) * int(t[3]['y']) * 0.0007
                 volume = area * math.sqrt(area)
-                print("The volume is")
-                print(volume)
-
+                second_string = str(int(volume*0.0001*time))
+                print(first_string + second_string)
 
 
 
