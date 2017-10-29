@@ -1,0 +1,54 @@
+{
+  "labelAnnotations": [
+    {
+      "description": "person",
+      "score": 0.94170064,
+      "mid": "/m/01g317"
+    },
+    {
+      "description": "official",
+      "score": 0.8927722,
+      "mid": "/m/035y33"
+    },
+    {
+      "description": "profession",
+      "score": 0.86118525,
+      "mid": "/m/063km"
+    },
+    {
+      "description": "business executive",
+      "score": 0.85435706,
+      "mid": "/m/0n5szg6"
+    },
+    {
+      "description": "professional",
+      "score": 0.8157044,
+      "mid": "/m/01qkbx"
+    },
+    {
+      "description": "businessperson",
+      "score": 0.794867,
+      "mid": "/m/012t_z"
+    },
+    {
+      "description": "chin",
+      "score": 0.78583866,
+      "mid": "/m/0f9swq"
+    },
+    {
+      "description": "executive officer",
+      "score": 0.7610023,
+      "mid": "/m/0289fz"
+    },
+    {
+      "description": "spokesperson",
+      "score": 0.7259952,
+      "mid": "/m/01xr66"
+    },
+    {
+      "description": "elder",
+      "score": 0.69997835,
+      "mid": "/m/027v9wk"
+    }
+  ]
+}

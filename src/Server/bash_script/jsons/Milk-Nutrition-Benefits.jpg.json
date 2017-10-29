@@ -1,0 +1,29 @@
+{
+  "labelAnnotations": [
+    {
+      "description": "drink",
+      "score": 0.86041737,
+      "mid": "/m/0271t"
+    },
+    {
+      "description": "juice",
+      "score": 0.7045899,
+      "mid": "/m/01z1kdw"
+    },
+    {
+      "description": "irish cream",
+      "score": 0.6375168,
+      "mid": "/m/02tzm8"
+    },
+    {
+      "description": "dairy product",
+      "score": 0.5365819,
+      "mid": "/m/0284d"
+    },
+    {
+      "description": "health shake",
+      "score": 0.5260506,
+      "mid": "/m/0cp0f9s"
+    }
+  ]
+}

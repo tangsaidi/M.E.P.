@@ -1,1 +1,1 @@
-dish;20
+spaghetti;9
