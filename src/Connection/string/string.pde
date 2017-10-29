@@ -7,7 +7,7 @@ Serial myPort;
 
 void setup(){
  mySwitch=1;
- myPort = new Serial(this, "/dev/ttyACM0", 9600);
+ myPort = new Serial(this, "/dev/ttyACM1", 9600);
  myPort.bufferUntil('\n');
 }
 void draw() {
@@ -31,6 +31,7 @@ void draw() {
  delay(1000);
  mySwitch=1;
  }
+ exit();
 } 
 
 

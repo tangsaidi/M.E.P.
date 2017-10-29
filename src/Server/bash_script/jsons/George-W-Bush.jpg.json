@@ -1,54 +1,54 @@
 {
   "labelAnnotations": [
     {
-      "description": "person",
+      "mid": "/m/01g317",
       "score": 0.94170064,
-      "mid": "/m/01g317"
+      "description": "person"
     },
     {
-      "description": "official",
+      "mid": "/m/035y33",
       "score": 0.8927722,
-      "mid": "/m/035y33"
+      "description": "official"
     },
     {
-      "description": "profession",
+      "mid": "/m/063km",
       "score": 0.86118525,
-      "mid": "/m/063km"
+      "description": "profession"
     },
     {
-      "description": "business executive",
+      "mid": "/m/0n5szg6",
       "score": 0.85435706,
-      "mid": "/m/0n5szg6"
+      "description": "business executive"
     },
     {
-      "description": "professional",
-      "score": 0.8157044,
-      "mid": "/m/01qkbx"
+      "mid": "/m/01qkbx",
+      "score": 0.8157043,
+      "description": "professional"
     },
     {
-      "description": "businessperson",
-      "score": 0.794867,
-      "mid": "/m/012t_z"
+      "mid": "/m/012t_z",
+      "score": 0.7948669,
+      "description": "businessperson"
     },
     {
-      "description": "chin",
-      "score": 0.78583866,
-      "mid": "/m/0f9swq"
+      "mid": "/m/0f9swq",
+      "score": 0.78583854,
+      "description": "chin"
     },
     {
-      "description": "executive officer",
+      "mid": "/m/0289fz",
       "score": 0.7610023,
-      "mid": "/m/0289fz"
+      "description": "executive officer"
     },
     {
-      "description": "spokesperson",
+      "mid": "/m/01xr66",
       "score": 0.7259952,
-      "mid": "/m/01xr66"
+      "description": "spokesperson"
     },
     {
-      "description": "elder",
+      "mid": "/m/027v9wk",
       "score": 0.69997835,
-      "mid": "/m/027v9wk"
+      "description": "elder"
     }
   ]
 }

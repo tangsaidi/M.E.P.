@@ -1,29 +1,29 @@
 {
   "labelAnnotations": [
     {
-      "description": "drink",
-      "score": 0.86041737,
-      "mid": "/m/0271t"
+      "score": 0.8604175,
+      "mid": "/m/0271t",
+      "description": "drink"
     },
     {
-      "description": "juice",
-      "score": 0.7045899,
-      "mid": "/m/01z1kdw"
+      "score": 0.70459,
+      "mid": "/m/01z1kdw",
+      "description": "juice"
     },
     {
-      "description": "irish cream",
-      "score": 0.6375168,
-      "mid": "/m/02tzm8"
+      "score": 0.63751674,
+      "mid": "/m/02tzm8",
+      "description": "irish cream"
     },
     {
-      "description": "dairy product",
-      "score": 0.5365819,
-      "mid": "/m/0284d"
+      "score": 0.53658193,
+      "mid": "/m/0284d",
+      "description": "dairy product"
     },
     {
-      "description": "health shake",
-      "score": 0.5260506,
-      "mid": "/m/0cp0f9s"
+      "score": 0.52605057,
+      "mid": "/m/0cp0f9s",
+      "description": "health shake"
     }
   ]
 }
