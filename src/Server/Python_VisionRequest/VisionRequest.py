@@ -9,7 +9,7 @@ import math
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
-myAPIKey = 'AIzaSyC-SHS_56ZC7GC3dv374UcGsOUD3PTLEtQ'
+#************This line is for api key
 ENDPOINT_URL = 'https://vision.googleapis.com/v1/images:annotate'
 RESULTS_DIR = 'jsons'
 makedirs(RESULTS_DIR, exist_ok=True)
