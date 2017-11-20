@@ -1,0 +1,9 @@
+#!/bin/sh
+
+
+inotifywait -m ~/Desktop/image -e create -e moved_to |
+    while read path action file; do
+        echo "The file '$file' appeared in directory '$path' via '$action'"
+        result=$(python3 /home/pi/Desktop/VisionRequest.py $path/$file)
+        echo $result
+    done

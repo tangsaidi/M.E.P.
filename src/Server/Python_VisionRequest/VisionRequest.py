@@ -5,15 +5,17 @@ from sys import argv
 import json
 import requests
 import math
+import serial
+import time
 
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
-#************This line is for api key
+myAPIKey = 'AIzaSyC-SHS_56ZC7GC3dv374UcGsOUD3PTLEtQ'
 ENDPOINT_URL = 'https://vision.googleapis.com/v1/images:annotate'
 RESULTS_DIR = 'jsons'
 makedirs(RESULTS_DIR, exist_ok=True)
-time = 45
+foodtime = 45
 first_string = ""
 second_string = ""
 def make_image_data_list(image_filenames, content_type):
@@ -101,9 +103,9 @@ if __name__ == '__main__':
                 first_string = bestmatch + ";"
                 # print("time is")
                 if bestmatch != "dish":
-                    time = items[bestmatch]
+                    foodtime = items[bestmatch]
                 else:
-            	    time = 30
+            	    foodtime = 30
             #save the size response to a size.json file
             for idx, resp in enumerate(sizeresponse.json()['responses']):
                 # save to JSON file
@@ -116,8 +118,16 @@ if __name__ == '__main__':
                 t = resp['cropHintsAnnotation']['cropHints'][0]["boundingPoly"]['vertices']
                 area = int(t[1]['x']) * int(t[3]['y']) * 0.0007
                 volume = area * math.sqrt(area)
-                second_string = str(int(volume*0.0001*time))
+                second_string = str(int(volume*0.0001*foodtime))
+
+                
+                final_string = first_string+second_string
+                with serial.Serial('/dev/ttyACM0',9600, timeout = 5) as ser:
+                    time.sleep(1.8)
+                    ser.write(final_string.encode('utf-8'))
+
                 print(first_string + second_string)
+
 
 
 

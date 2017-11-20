@@ -1,7 +1,7 @@
 #include <LiquidCrystal.h>
 
 LiquidCrystal lcd1(7,8,9,10,11,12);
-LiquidCrystal lcd2(7,2,9,10,11,12);
+LiquidCrystal lcd2(7,13,9,10,11,12);
 
 String text;
 int recomTime;
