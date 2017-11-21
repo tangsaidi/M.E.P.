@@ -31,6 +31,7 @@ int microTime;
 //Flags
 int flag;
 int flag2 =1;
+int flag3 =0;
 
 //Button variable
 //int ledPin = 1;
@@ -62,7 +63,7 @@ int time = 0;
 int temp (double input, double temp1) {
   int change = input - (int)((temp1 - 25) / 5) * 10;
   //Serial.println(change);
-  if (change >= 100) change = 99;
+  if (change >= 1000) change = 999;
   else if (change < 0) change = 0;
   return change;
 }
@@ -128,11 +129,11 @@ void loop() {
     lcd2.print("Swipe to adjust");
     flag = 1;
     flag2 = 1;
-    //i = 1;
+    flag3 = 1;
     text = "";
     preTime = microTime;
     microTime = 0;
-  } else if (i == 0) {
+  } else if (flag3 == 0) {
     lcd1.print("Put in your food");
   }
 
@@ -186,8 +187,10 @@ void loop() {
       }
     }
     lcd1.setCursor(6, 1);
-    lcd1.print(temp(preTime, tempC));
+    preTime= temp(preTime, tempC);
+    lcd1.print(preTime);
     lcd1.setCursor(9, 1);
     lcd1.print("sec");
   }
 }
+
