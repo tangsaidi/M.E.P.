@@ -7,12 +7,12 @@ Serial myPort;
 
 void setup(){
  mySwitch=1;
- myPort = new Serial(this, "/dev/cu.usbmodem1461", 9600);
+ myPort = new Serial(this, "/dev/ttyACM1", 9600);
  myPort.bufferUntil('\n');
 }
 void draw() {
  if(mySwitch>0){
- readData("/Users/andywang/string/string.txt");
+ readData("/home/pi/Documents/GitHub/M.E.P./src/Connection/string/string.txt");
  mySwitch=0;
  }
  delay(2000);
@@ -31,6 +31,7 @@ void draw() {
  delay(1000);
  mySwitch=1;
  }
+ exit();
 } 
 
 
