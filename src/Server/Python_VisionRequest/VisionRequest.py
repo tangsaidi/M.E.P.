@@ -11,6 +11,10 @@ import time
 from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 
+###
+### This code is written in Python 3
+###
+
 myAPIKey = 'AIzaSyC-SHS_56ZC7GC3dv374UcGsOUD3PTLEtQ'
 ENDPOINT_URL = 'https://vision.googleapis.com/v1/images:annotate'
 RESULTS_DIR = 'jsons'
@@ -46,7 +50,7 @@ def make_image_data(image_filenames, content_type):
     return json.dumps({"requests": imgdict }).encode()
 
 
-def request_label(api_key, image_filenames):
+def request_label(api_key, image_file):
     response = requests.post(ENDPOINT_URL,
                              data=make_image_data(image_filenames, 'LABEL_DETECTION'),
                              params={'key': myAPIKey},
@@ -86,8 +90,8 @@ if __name__ == '__main__':
                     f.write(datatxt)
 
 
-                keys = ['milk','spaghetti','ramen','steak','drink']
-                values = [20, 35, 30, 50, 20]
+                keys = ['milk','spaghetti','ramen','steak','drink','bread','potato','barbecue','wings','burrito','pasta','pizza','vegetable','burger','hot dog','chicken','fish', 'rice']
+                values = [40, 90, 80, 140, 40, 40, 70, 140, 115, 85, 90, 75, 50, 105, 115, 85, 120, 90]
                 items = {k:v for k, v in zip(keys, values)}
 
                 # print the plaintext to screen for convenience
@@ -105,7 +109,7 @@ if __name__ == '__main__':
                 if bestmatch != "dish":
                     foodtime = items[bestmatch]
                 else:
-            	    foodtime = 30
+            	    foodtime = 80
             #save the size response to a size.json file
             for idx, resp in enumerate(sizeresponse.json()['responses']):
                 # save to JSON file
@@ -122,9 +126,10 @@ if __name__ == '__main__':
 
                 
                 final_string = first_string+second_string
-                with serial.Serial('/dev/ttyACM0',9600, timeout = 5) as ser:
-                    time.sleep(1.8)
-                    ser.write(final_string.encode('utf-8'))
+                if (bestmatch!= "dish"):
+                    with serial.Serial('/dev/ttyACM0',9600, timeout = 5) as ser:
+                        time.sleep(1.8)
+                        ser.write(final_string.encode('utf-8'))
 
                 print(first_string + second_string)
 
