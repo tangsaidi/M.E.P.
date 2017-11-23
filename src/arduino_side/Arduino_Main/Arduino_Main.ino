@@ -75,8 +75,8 @@ int dayi = 0;
 
 //-------------------Receive real time from raspary pi//
 void requestTime(){
-  Serial.println('t');
-  delay(2000);
+  Serial.print('t');
+  while (!Serial.available());
   String number = Serial.readString();
   String year1 = (String)number[0]+(String)number[1]+(String)number[2]+(String)number[3];
   String month1 = (String)number[4]+(String)number[5];
@@ -92,15 +92,15 @@ void requestTime(){
 
 //-------------------Receive weather from raspary pi//
 void requestWeather(){
-  Serial.println('w');
-  delay(2000);
+  Serial.print('w');
+  while (!Serial.available());
   weather = Serial.readString();
 }
 
 //-------------------Test leap year//
 int isLeapYear(int year){
   if(year % 400 == 0) return 1;
-  if(year % 100 == 0) return 0;
+  if(year % 100 == 0) return 0;delay(2000);
   if(year % 4 == 0) return 1;
   return 0;
 }
@@ -181,7 +181,7 @@ void measureTemp() {
 
 //-------------------//
 int rightTleft(int change) {
-  Serial.println("FROM Right to Left");
+//  Serial.println("FROM Right to Left");
   delay(200);
   value = 0;
   count1 = 0;
@@ -193,7 +193,7 @@ int rightTleft(int change) {
 
 //-------------------//
 int leftTright(int change) {
-  Serial.println("FROM Left to Right");
+//  Serial.println("FROM Left to Right");
   delay(200);
   value = 0;
   count1 = 0;
@@ -205,7 +205,7 @@ int leftTright(int change) {
 
 //-------------------//
 void push() {
-  Serial.println("PUSH");
+//  Serial.println("PUSH");
   delay(200);
   value = 0;
   count1 = 0;
@@ -227,7 +227,7 @@ void setup() {
   lcd1.begin(16, 2);
   lcd2.begin(16, 2);
   delay(500);
-  Serial.setTimeout(100);
+  //Serial.setTimeout(100);
   requestTime();
   requestWeather();
 }
@@ -243,8 +243,8 @@ void loop() {
   //--------------------------------------Digital Clock display function part--------------------------------------//
   //Only display time when food recognision is not activated//--when all the flag values are 0--//
 if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
-   lcd1.clear();        //
-   lcd2.clear();        //clear the screens to print time
+//   lcd1.clear();        //
+//   lcd2.clear();        //clear the screens to print time
    
    lcd1.setCursor(10,0);    //
    lcd2.setCursor(0,0);     //Reset LCD cursor for intended visual layout
