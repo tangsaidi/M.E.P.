@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Uses inotify package to monitor if an image is added to the target folder
+inotifywait -m ~/Desktop/image -e create -e moved_to |
+	# gets the path and file name from inotify
+    while read path action file; do
+        echo "The file '$file' appeared in directory '$path' via '$action'"
+        # Uses python3 to run VisionRequest.py, which takes the image obtained
+        # from inotify as input, recognizes the food type in the picture and its
+        # size. 
+        result=$(python3 /home/pi/Desktop/VisionRequest.py $path/$file)
+        echo $result
+    done
