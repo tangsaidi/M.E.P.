@@ -1,40 +1,43 @@
 #include <LiquidCrystal.h>
+
+
 LiquidCrystal lcd1(7,8,9,10,11,12);
 LiquidCrystal lcd2(7,13,9,10,11,12);
 
 //Variables for Real-Time & weather request and display 
 int hour;
 int minute;
-int second;
+int second = 0;
 int year;
 int month;
 int date;
-String day[] = {"Mon","Tue","Wed","Thurs","Fri","Sat","Sun"};
+String day[] = {"Sun","Mon","Tue","Wed","Thurs","Fri","Sat"};
 String weather;
 int dayi = 0;
 //
 //Receive real time from raspary pi
 void requestTime(){
   Serial.println('t');
-  delay(500);
-  int number = Serial.parseInt();
-  * &year = number / 10000000000;
-    number %= 10000000000;
-  * &month = number / 100000000;
-    number %= 100000000;
-  * &date = number / 1000000;
-    number %= 1000000; 
-  * &hour = number / 10000;
-    number %= 10000;
-  * &minute = number / 100;
+  delay(2000);
+  String number = Serial.readString();
+  String year1 = (String)number[0]+(String)number[1]+(String)number[2]+(String)number[3];
+  String month1 = (String)number[4]+(String)number[5];
+  String date1 = (String)number[6]+(String)number[7];
+  String hour1 = (String)number[8]+(String)number[9];
+  String minute1 = (String)number[10]+(String)number[11];
+  year = year1.toInt();
+  month = month1.toInt();
+  date = date1.toInt();
+  hour = hour1.toInt();
+  minute =  minute1.toInt();
 }
 //
 
 //Receive weather from raspary pi
 void requestWeather(){
   Serial.println('w');
-  delay(500);
-  * &weather = Serial.readString();
+  delay(2000);
+  weather = Serial.readString();
 }
 //
 
@@ -46,6 +49,11 @@ int isLeapYear(int year){
   return 0;
 }
 //
+
+int weekday(int d,int m, int y) {
+       int weekday = (d += m < 3 ? y-- : y - 2, 23 * m / 9 + d + 4 + y / 4 - y / 100 + y / 400) % 7;
+    return weekday;
+}
 
 void setup() {
   lcd1.begin(16,2);
@@ -149,7 +157,7 @@ void loop() {
     lcd1.print(date);
    }else lcd1.print(date);
    lcd1.print(" ");
-   lcd1.print(day[dayi]);
+   lcd1.print(day[weekday(date,month,year)]);
 
    
 // lcd2

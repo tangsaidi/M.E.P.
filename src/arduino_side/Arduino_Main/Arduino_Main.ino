@@ -1,4 +1,6 @@
 #include <LiquidCrystal.h>
+#include <stdlib.h>
+#include <string.h>
 //--------------------------------------Variable Definition---------------------------------------------------------//
 #define trigPin1 3
 #define echoPin1 4
@@ -65,7 +67,7 @@ int second;
 int year;
 int month;
 int date;
-String day[] = {"Mon","Tue","Wed","Thurs","Fri","Sat","Sun"};
+String day[] = {"Sun","Mon","Tue","Wed","Thurs","Fri","Sat"};
 String weather;
 int dayi = 0;
 
@@ -74,24 +76,25 @@ int dayi = 0;
 //-------------------Receive real time from raspary pi//
 void requestTime(){
   Serial.println('t');
-  delay(500);
-  int number = Serial.parseInt();
-  * &year = number / 10000000000;
-    number %= 10000000000;
-  * &month = number / 100000000;
-    number %= 100000000;
-  * &date = number / 1000000;
-    number %= 1000000; 
-  * &hour = number / 10000;
-    number %= 10000;
-  * &minute = number / 100;
+  delay(2000);
+  String number = Serial.readString();
+  String year1 = (String)number[0]+(String)number[1]+(String)number[2]+(String)number[3];
+  String month1 = (String)number[4]+(String)number[5];
+  String date1 = (String)number[6]+(String)number[7];
+  String hour1 = (String)number[8]+(String)number[9];
+  String minute1 = (String)number[10]+(String)number[11];
+  year = year1.toInt();
+  month = month1.toInt();
+  date = date1.toInt();
+  hour = hour1.toInt();
+  minute =  minute1.toInt();
 }
 
 //-------------------Receive weather from raspary pi//
 void requestWeather(){
   Serial.println('w');
-  delay(500);
-  * &weather = Serial.readString();
+  delay(2000);
+  weather = Serial.readString();
 }
 
 //-------------------Test leap year//
@@ -100,6 +103,12 @@ int isLeapYear(int year){
   if(year % 100 == 0) return 0;
   if(year % 4 == 0) return 1;
   return 0;
+}
+
+//-------------------Recognize weekday//
+int weekday(int d,int m, int y) {
+       int weekday = (d += m < 3 ? y-- : y - 2, 23 * m / 9 + d + 4 + y / 4 - y / 100 + y / 400) % 7;
+    return weekday;
 }
 
 //-------------------//
@@ -181,6 +190,9 @@ void loop() {
 
   //--------------------------------------Digital Clock display function part--------------------------------------//
 if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
+   lcd1.clear();
+   lcd2.clear();
+   
    lcd1.setCursor(10,0);
    lcd2.setCursor(0,0);
    
@@ -272,7 +284,7 @@ if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
     lcd1.print(date);
    }else lcd1.print(date);
    lcd1.print(" ");
-   lcd1.print(day[dayi]);
+   lcd1.print(day[weekday(date,month,year)]);
 
    
 // lcd2
@@ -323,6 +335,7 @@ if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
     lcd2.setCursor(0, 0);
     
     lcd1.clear();
+    lcd2.clear();
     text = Serial.readStringUntil(';');
     microTime = Serial.parseInt();
     lcd1.print("Type: ");
@@ -348,6 +361,7 @@ if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
       //Measure the temperature of surrounding with thermosenser
     if ((curTimer - preTimer) > Interval) { //delay(2000);
       measureTemp();
+      lcd2.setCursor(0, 0);
       lcd2.print("Temp         C  ");
       lcd2.setCursor(6, 0);
       lcd2.print(tempC);
@@ -491,7 +505,9 @@ if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
     }
     if (countDown <= 0 && prepTime != 0) {
       flag = 0;
+      flag2=0;
       flag3 = 0;
+      flag4=0;
       flag5 = 1; // restart to begining
       preTimer4=millis();
     }
