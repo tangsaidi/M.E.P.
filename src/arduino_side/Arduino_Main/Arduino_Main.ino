@@ -110,6 +110,58 @@ int weekday(int d,int m, int y) {
        int weekday = (d += m < 3 ? y-- : y - 2, 23 * m / 9 + d + 4 + y / 4 - y / 100 + y / 400) % 7;
     return weekday;
 }
+//-------------------Calculate time for clock_display//
+void updateTime(){
+  if(second % 60 == 0){
+    second %= 60;
+    minute++;
+   }
+  if(minute == 60){
+    minute %= 60;
+    hour++;
+    requestWeather();
+   } 
+  if(hour == 24){
+    hour %= 24;
+    date++;
+    dayi++;
+   }
+  if(dayi == 7) dayi = 0;
+  if(month < 8){
+     if(month == 2){
+       if(isLeapYear(year) && date > 29){
+          date = 1;
+          month ++;
+        }
+       else if(date > 28){
+          date = 1;
+          month++;
+        }
+     }else if(month % 2 == 1){
+        if(date > 31){
+          date = 1;
+          month++;
+        }
+     }else if(date > 30){
+        date = 1;
+        month++;
+     }
+  }else if(month >= 8){
+     if(month % 2 == 0){
+        if(date > 31){
+          date = 1;
+          month++;
+        }
+     }else if(date > 30){
+        date = 1;
+        month++;
+     }
+  }
+  if(month > 12){
+      month = 1;
+      year++;
+  }
+}
 
 //-------------------//
 int temp (double temp1) {
@@ -189,81 +241,34 @@ void loop() {
   curTimer3 = millis();
 
   //--------------------------------------Digital Clock display function part--------------------------------------//
+  //Only display time when food recognision is not activated//--when all the flag values are 0--//
 if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
-   lcd1.clear();
-   lcd2.clear();
+   lcd1.clear();        //
+   lcd2.clear();        //clear the screens to print time
    
-   lcd1.setCursor(10,0);
-   lcd2.setCursor(0,0);
+   lcd1.setCursor(10,0);    //
+   lcd2.setCursor(0,0);     //Reset LCD cursor for intended visual layout
    
-   second += 1;
-   delay(1000);
+   second += 1;   //keep track of second increment as the arduino is turned on
+   delay(1000);   //delay for 1 second so that the "second" variable is incremented correctly and 
+                  //the clock is working normally
    
-   if(second % 60 == 0){
-    second %= 60;
-    minute++;
-   }
-   if(minute == 60){
-      minute %= 60;
-      hour++;
-      requestWeather();
-   } 
-   if(hour == 24){
-    hour %= 24;
-    date++;
-    dayi++;
-   }
-   
-   if(dayi == 7) dayi = 0;
-   
-    if(month < 8){
-      if(month == 2){
-        if(isLeapYear(year) && date > 29){
-          date = 1;
-          month ++;
-        }
-        else if(date > 28){
-          date = 1;
-          month++;
-        }
-      }else if(month % 2 == 1){
-        if(date > 31){
-          date = 1;
-          month++;
-        }
-      }else if(date > 30){
-        date = 1;
-        month++;
-      }
-    }else if(month >= 8){
-     if(month % 2 == 0){
-      if(date > 31){
-        date = 1;
-        month++;
-      }
-     }else if(date > 30){
-      date = 1;
-      month++;
-     }
-    }
-    if(month > 12){
-      month = 1;
-      year++;
-    }
+   updateTime();  //the function that helps update minute, hour, day, month, and even year varialbles according to 
+                  //the constantly changing variable second
 
-//lcd1
+//lcd1 display -- printing algorithm
 
    if(hour < 10){
-    lcd1.print(" ");
+    lcd1.print(" ");    //taking care of layout
     lcd1.print(hour);
    }
    else lcd1.print(hour);
 
-   if(second % 2 == 0) lcd1.print(":");
+   if(second % 2 == 0) lcd1.print(":");     //enabling a blinking ":" that indicates the change in seconds -- mimicing a digital clock dispay
    else lcd1.print(" ");
    
    if(minute < 10){
-    lcd1.print(0);
+    lcd1.print(0);    //taking care of layout
     lcd1.print(minute);
    }
    else lcd1.print(minute);
@@ -275,12 +280,12 @@ if(flag == 0 && flag2 == 0 && flag3 == 0 && flag4 == 0 && flag5 == 0){
    lcd1.print(year);
    lcd1.print("/");
    if(month < 10){
-    lcd1.print(0);
+    lcd1.print(0);    //taking care of layout
     lcd1.print(month);
    }else lcd1.print(month);
    lcd1.print("/");
    if(date < 10){
-    lcd1.print(0);
+    lcd1.print(0);    //taking care of layout
     lcd1.print(date);
    }else lcd1.print(date);
    lcd1.print(" ");
