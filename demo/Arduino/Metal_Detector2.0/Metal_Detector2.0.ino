@@ -9,22 +9,30 @@
 const byte nOfpulse = 10; 
 
 //Define all the pins
-const byte pin_pulse=A0;
-const byte pin_cap  =A1;
-const byte pin_LED1 =12;
-const byte pin_tone =10;
+const byte pin_pulse=A4;
+const byte pin_cap  =A3;
+const byte pin_LED1 =2;
+const byte pin_tone =A5;
 
+int count=0; 
+
+//Instead of using delay(), a timer is used to reduce the "update rate" of a block of code  
+unsigned long preTimer5;         //Previous Time 
+unsigned long curTimer5;         //Current Time
+unsigned long Interval5 = 5000;  //Amount of delay
+int flag5 =0;
+int flag6 =0;
 void setup() {
   Serial.begin(9600);
   //Set up all the pins
   pinMode(pin_cap, INPUT);  
   pinMode(pin_pulse, OUTPUT);
   pinMode(pin_LED1, OUTPUT);
-  pinMode(pin_tone, OUTPUT);
+  //pinMode(pin_tone, OUTPUT);
   //Set the pins to low 
   digitalWrite(pin_pulse, LOW);
   digitalWrite(pin_LED1, LOW);
-  digitalWrite(pin_tone, LOW);
+  //digitalWrite(pin_tone, LOW);
 }
 
 const int nOfMeasure =200;  //measurements to take
@@ -36,6 +44,7 @@ long unsigned int prev_flash=0; //time stamp of previous flash
 long unsigned int timestamp =0;
 
 void loop() {
+  if(flag6==0){
   int minval=1023;
   int maxval=0;
   //perform measurement
@@ -82,6 +91,7 @@ void loop() {
     if (ledstat==1){
       digitalWrite(pin_LED1,HIGH);
       tone(pin_tone,500);
+      count++;
     }
   }
   //subtract minimum and maximum value to remove spikes
@@ -98,8 +108,30 @@ void loop() {
   } else {
     skip++;
   }
+  if (skip>64){     // break off in case of prolonged skipping
+    totalSum=sum<<6;
+    skip=0;
+  }
+
   if (diff==0) flash_period=1000000;
   else flash_period=avgsum/(2*abs(diff));
+    curTimer5=millis();                  
+    if ((curTimer5 - preTimer5) > Interval5&&flag5==1) { 
+        flag5=0;   
+        count=0;
+        //turn off the indicator of "done cooking"
+        //Serial.println("Done"); 
+        preTimer5 = millis();
+        
+    }
+    if(count>=3&&flag5==0){ 
+    Serial.println("Metal Detected"); 
+    count=0;
+    flag5=1;
+    preTimer5 = millis();
+  }
+ }
+  
   /*
   if (debug){
     Serial.print(minval); 
