@@ -1,6 +1,6 @@
 README
 
-### Microwave Empowerment Project (M.E.P.)
+# Microwave Empowerment Project (M.E.P.)
 
 Our SE101 project intends to bring the modern microwave oven to a completely new level.
 We gave it ability to not only recognize your delicacy, but also recommend a time based
