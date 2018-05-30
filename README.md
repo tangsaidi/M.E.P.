@@ -1,6 +1,6 @@
 README
 
-Microwave Empowerment Project (M.E.P.)
+### Microwave Empowerment Project (M.E.P.)
 
 Our SE101 project intends to bring the modern microwave oven to a completely new level.
 We gave it ability to not only recognize your delicacy, but also recommend a time based
@@ -33,7 +33,7 @@ CHEERS FOR THE BRIGHT FUTURE OF MICROWAVES!!!
 3. Various greeting messages at different time of a day
 
 
-Instructions:
+# Instructions:
 
 Server/FINAL contains all the server side code. 
 1. start.sh: Starts all three background processes, including detectChange, SerialHandler
@@ -50,14 +50,14 @@ code runs on an independent Arduino board.
 For more detailed explanations, please go into each source code file.
 
 
-Languages used:
+# Languages used:
 Demo:
 1. Arduino (C/C++)
 2. Python2 (ButtonTest.py & SerialHandler.py)
 3. Python3 (VisionRequest.py)
 4. Bash Script
 
-Prototype:
+# Prototype:
 4. Processing
 5. Automator
 
